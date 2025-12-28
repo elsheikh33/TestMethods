@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestMethods.Models;
+using TestMethods.Services;
 
 namespace TestMethods.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
@@ -18,7 +19,7 @@ namespace TestMethods.Controllers
         public async Task<IActionResult> GetCustomerByCity([FromQuery] string city) 
         {
             var customers = await _context.Customers
-                                                      .Where(c => c.City == city) // Filters by city
+                                                      .Where(c => c.City == city) 
                                                       .Select(c => new
                                                       {
                                                           c.FirstName,
@@ -34,5 +35,15 @@ namespace TestMethods.Controllers
 
             return Ok(customers);
         }
+
+        
+            [HttpGet("orders-by-customer")]
+            public IActionResult GetOrdersByCustomer()
+            {
+                var service = new OrderService();
+                var data = service.GetOrderCounts(5);
+                return Ok(data);
+            }
+        }
     } 
-}
+

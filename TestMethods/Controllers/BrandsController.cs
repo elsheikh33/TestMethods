@@ -17,7 +17,7 @@ namespace TestMethods.Controllers
         public async Task<IActionResult> addBrand([FromBody] string brandName)
         {
             var newBrand = new Brand
-            {
+            { 
                 BrandName = brandName
             };
             _context.Brands.Add(newBrand);
@@ -34,6 +34,6 @@ namespace TestMethods.Controllers
         }
     }
 }
-
+ 
 
 

@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddScoped<IProductService, ProductService>();
+
 builder.Services.AddDbContext<BikeStoresContext>(options =>
     options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BikeStores;Trusted_Connection=True;TrustServerCertificate=True;"));
 
