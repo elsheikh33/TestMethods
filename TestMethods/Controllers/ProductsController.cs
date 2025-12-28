@@ -17,4 +17,20 @@ public class ProductsController : ControllerBase
         var products = await _productService.GetAllProductsAsync();
         return Ok(products);
     }
+
+    [HttpGet("by-price-range")]
+
+    public async Task<IActionResult> GetProductsByPriceRange([FromQuery] decimal minPrice, [FromQuery] decimal maxPrice) {
+
+        var allProducts = await _productService.GetAllProductsAsync();
+        var priceList =
+         allProducts.Where(p => p.ListPrice >= minPrice && p.ListPrice <= maxPrice) 
+         .Select(p => new
+         {
+             p.ProductId,
+             p.ListPrice
+         }) 
+         .ToList();
+        return Ok(priceList);
+    }
 }
